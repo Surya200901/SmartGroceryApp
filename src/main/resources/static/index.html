@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Grocery</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<style>
+	    /* General Body Styling */
+	    body {
+	        font-family: 'Arial', sans-serif;
+	        background-color: #f9fafb;
+	        margin: 0;
+	        padding: 0;
+	        margin-bottom: 60px; /* Adjust to prevent content behind footer */
+	    }
+
+	    /* Navbar */
+	    .navbar {
+	        background-color: #0288d1; /* Pleasant blue */
+	    }
+
+	    .navbar-brand, .nav-link {
+	        color: white !important;
+	        transition: color 0.3s ease;
+	    }
+
+	    .navbar-brand:hover, .nav-link:hover {
+	        color: #ffee58 !important; /* Bright yellow on hover */
+	    }
+
+	    /* Hero Section */
+	    .hero {
+	        background: linear-gradient(to bottom right, #0288d1, #b3e5fc); /* Gradient background */
+	        color: white;
+	        text-align: center;
+	        padding: 80px 20px;
+	        animation: fadeIn 2s ease;
+	    }
+
+	    .hero h1 {
+	        font-size: 3.5rem;
+	        font-weight: bold;
+	    }
+
+	    .hero p {
+	        font-size: 1.5rem;
+	        margin: 20px 0;
+	    }
+
+	    .hero a {
+	        transition: transform 0.3s ease, background-color 0.3s ease;
+	        background-color: #01579b; /* Deep blue */
+	        color: white;
+	        border: none;
+	        padding: 10px 20px;
+	        border-radius: 25px;
+	    }
+
+	    .hero a:hover {
+	        transform: scale(1.1);
+	        background-color: #004d76; /* Darker blue */
+	    }
+
+	    /* Grocery List Section */
+	    .grocery-list {
+	        margin: 40px 0;
+	        animation: slideInFromLeft 1.5s ease-out;
+	    }
+
+	    .grocery-list h2 {
+	        text-align: center;
+	        margin-bottom: 20px;
+	        color: #37474f; /* Slate gray */
+	    }
+
+	    .list-group-item {
+	        display: flex;
+	        justify-content: space-between;
+	        background-color: #eceff1;
+	        border: none;
+	        border-radius: 5px;
+	        margin-bottom: 10px;
+	        transition: transform 0.2s ease, background-color 0.3s ease;
+	    }
+
+	    .list-group-item:hover {
+	        transform: scale(1.02);
+	        background-color: #cfd8dc; /* Lighter gray */
+	    }
+		
+		.grocery-list {
+		        background: linear-gradient(to bottom right, #4caf50, #a5d6a7); /* Green shades */
+		        padding: 40px 20px;
+		        border-radius: 10px;
+		        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+		        margin: 40px auto; /* Center horizontally */
+		        max-width: 800px; /* Adjust width */
+		        animation: fadeInScale 1.5s ease-in-out;
+		    }
+
+		    .grocery-list h2 {
+		        color: white;
+		        font-weight: bold;
+		        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Text shadow for depth */
+		        text-align: center;
+		    }
+
+		    .grocery-list input {
+		        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Input shadow */
+		    }
+
+		    .grocery-list button {
+		        background-color: #388e3c; /* Dark green */
+		        color: white;
+		        border: none;
+		        transition: background-color 0.3s ease, transform 0.3s ease;
+		    }
+
+		    .grocery-list button:hover {
+		        background-color: #2e7d32; /* Darker green */
+		        transform: scale(1.1); /* Slight zoom on hover */
+		    }
+
+	    /* Teasers Section */
+	    .container.my-5 {
+	        animation: fadeInScale 1.5s ease-in;
+	        background: linear-gradient(to bottom right, #ff9800, #ffe0b2); /* Orange shades */
+	        padding: 40px 20px;
+	        border-radius: 10px;
+	        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+	    }
+
+	    .container.my-5 h2 {
+	        text-align: center;
+	        color: #ffffff;
+	        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Text shadow for depth */
+	        font-weight: bold;
+	    }
+
+	    .container.my-5 .col-md-4 {
+	        transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+	        background-color: #ffffff;
+	        padding: 20px;
+	        border-radius: 10px;
+	        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+	        cursor: pointer;
+	    }
+
+	    .container.my-5 .col-md-4:hover {
+	        transform: translateY(-10px); /* Lift on hover */
+	        background-color: #ffd54f; /* Light yellow */
+	        box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2);
+	    }
+
+	    .container.my-5 .col-md-4 img {
+	        border: 3px solid #ffb300; /* Orange border around images */
+	        border-radius: 50%; /* Circle images */
+	    }
+
+	    .container.my-5 .col-md-4 h5 {
+	        color: #f57c00; /* Deep orange */
+	        font-weight: bold;
+	        transition: color 0.3s ease;
+	    }
+
+	    .container.my-5 .col-md-4:hover h5 {
+	        color: #1b5e20; /* Green accent on hover */
+	    }
+
+	    /* Footer */
+	    .footer {
+	        background-color: #37474f; /* Slate gray */
+	        color: white;
+	        text-align: center;
+	        padding: 10px 0;
+	        width: 100%;
+	        position: fixed;
+	        bottom: 0;
+	        left: 0;
+	        z-index: 1000; /* Ensures it stays above other content */
+	    }
+
+	    /* New Styling for Grocery Section */
+	    #grocery-section {
+	        background: linear-gradient(to bottom right, #4caf50, #a5d6a7); /* Green shades */
+	        padding: 40px 20px;
+	        border-radius: 10px;
+	        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+	        animation: fadeInScale 1.5s ease-in-out;
+	    }
+
+	    #grocery-section h2 {
+	        color: white;
+	        font-weight: bold;
+	        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Text shadow for depth */
+	    }
+
+	    #grocery-section input {
+	        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Input shadow */
+	    }
+
+	    #grocery-section button {
+	        background-color: #388e3c; /* Dark green */
+	        color: white;
+	        border: none;
+	        transition: background-color 0.3s ease, transform 0.3s ease;
+	    }
+
+	    #grocery-section button:hover {
+	        background-color: #2e7d32; /* Darker green */
+	        transform: scale(1.1); /* Slight zoom on hover */
+	    }
+
+	    /* Animations */
+	    @keyframes fadeIn {
+	        from {
+	            opacity: 0;
+	        }
+	        to {
+	            opacity: 1;
+	        }
+	    }
+
+	    @keyframes slideInFromLeft {
+	        from {
+	            opacity: 0;
+	            transform: translateX(-50%);
+	        }
+	        to {
+	            opacity: 1;
+	            transform: translateX(0);
+	        }
+	    }
+
+	    @keyframes fadeInScale {
+	        from {
+	            opacity: 0;
+	            transform: scale(0.8);
+	        }
+	        to {
+	            opacity: 1;
+	            transform: scale(1);
+	        }
+	    }
+	</style>
+
+
+</head>
+<body>
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container">
+        <a class="navbar-brand" href="index.html">Smart Grocery</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
+                <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
+                <li class="nav-item"><a class="nav-link" href="#grocery-section">Grocery List</a></li>
+				<li class="nav-item"><a class="nav-link" href="/api/grocery">Grocery</a></li>
+				<li class="nav-item"><a class="nav-link" href="#">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<div class="hero">
+    <h1>Welcome to Smart Grocery</h1>
+    <p>Your one-stop app for managing grocery lists and reducing waste!</p>
+    <a href="#grocery-section" class="btn btn-primary btn-lg">Get Started</a>
+</div>
+
+<!-- Grocery List Section -->
+	<div class="container-fluid d-flex flex-column" style="min-height: calc(100vh - 60px);">
+    <div class="container grocery-list" id="grocery-section">
+        <h2>Your Grocery List</h2>
+        <div class="mb-3">
+            <input type="text" id="itemName" class="form-control" placeholder="Item Name" required>
+            <input type="number" id="itemQuantity" class="form-control mt-2" placeholder="Quantity" required>
+            <input type="number" id="itemPrice" class="form-control mt-2" placeholder="Price" required>
+            <input type="text" id="itemCategory" class="form-control mt-2" placeholder="Category" required>
+            <button class="btn btn-primary mt-2" onclick="addItem()">Add Item</button>
+        </div>
+    </div>
+	<!-- Teasers Section -->
+	    <div class="container my-5">
+	        <h2 class="text-center mb-4">Why Choose Smart Grocery?</h2>
+	        <div class="row">
+	            <div class="col-md-4 text-center">
+	                <img src="https://via.placeholder.com/150" alt="Save Money" class="img-fluid rounded-circle mb-3">
+	                <h5>Save Money</h5>
+	                <p>Track your spending and optimize your grocery budget effortlessly.</p>
+	            </div>
+	            <div class="col-md-4 text-center">
+	                <img src="https://via.placeholder.com/150" alt="Avoid Waste" class="img-fluid rounded-circle mb-3">
+	                <h5>Avoid Waste</h5>
+	                <p>Keep track of what you already have to reduce unnecessary purchases.</p>
+	            </div>
+	            <div class="col-md-4 text-center">
+	                <img src="https://via.placeholder.com/150" alt="Smart Reminders" class="img-fluid rounded-circle mb-3">
+	                <h5>Smart Reminders</h5>
+	                <p>Get timely alerts when it’s time to restock essential items.</p>
+	            </div>
+	        </div>
+	        <div class="row mt-4">
+	            <div class="col-md-4 text-center">
+	                <img src="https://via.placeholder.com/150" alt="Organized Lists" class="img-fluid rounded-circle mb-3">
+	                <h5>Organized Lists</h5>
+	                <p>Create categorized lists for efficient shopping experiences.</p>
+	            </div>
+	            <div class="col-md-4 text-center">
+	                <img src="https://via.placeholder.com/150" alt="Mobile Friendly" class="img-fluid rounded-circle mb-3">
+	                <h5>Mobile Friendly</h5>
+	                <p>Access your grocery list anytime, anywhere on your device.</p>
+	            </div>
+	            <div class="col-md-4 text-center">
+	                <img src="https://via.placeholder.com/150" alt="Analytics" class="img-fluid rounded-circle mb-3">
+	                <h5>Spending Insights</h5>
+	                <p>Analyze your grocery trends and improve your shopping habits.</p>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <p>&copy; 2024 Smart Grocery. All Rights Reserved.</p>
+    </div>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    async function fetchItems() {
+        try {
+            const response = await fetch('/api/grocery');
+            const items = await response.json();
+            const list = document.getElementById('groceryList');
+            list.innerHTML = '';
+            items.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = `${item.name} - ${item.quantity}`;
+                li.classList.add('list-group-item');
+                list.appendChild(li);
+            });
+        } catch (error) {
+            console.error("Error fetching items:", error);
+        }
+    }
+
+	async function addItem() {
+	    const itemName = document.getElementById('itemName').value;
+	    const itemQuantity = document.getElementById('itemQuantity').value;
+	    const itemPrice = document.getElementById('itemPrice').value;
+	    const itemCategory = document.getElementById('itemCategory').value;
+
+	    if (itemName && itemQuantity && itemPrice && itemCategory) {
+	        try {
+	            await fetch('/api/grocery', {
+	                method: 'POST',
+	                headers: { 'Content-Type': 'application/json' },
+	                body: JSON.stringify({
+	                    name: itemName,
+	                    quantity: itemQuantity,
+	                    price: itemPrice,
+	                    category: itemCategory
+	                })
+	            });
+	            fetchItems();
+	            document.getElementById('itemName').value = '';
+	            document.getElementById('itemQuantity').value = '';
+	            document.getElementById('itemPrice').value = '';
+	            document.getElementById('itemCategory').value = '';
+	        } catch (error) {
+	            console.error("Error adding item:", error);
+	        }
+	    } else {
+	        alert("Please fill out all fields.");
+	    }
+	}
+    // Initialize the list
+    fetchItems();
+</script>
+
+</body>
+</html>
