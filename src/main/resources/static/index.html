@@ -176,7 +176,7 @@
 	        text-align: center;
 	        padding: 10px 0;
 	        width: 100%;
-	        position: fixed;
+	        position: relative;
 	        bottom: 0;
 	        left: 0;
 	        z-index: 1000; /* Ensures it stays above other content */
@@ -244,11 +244,24 @@
 	            transform: scale(1);
 	        }
 	    }
-	</style>
+		
+		.hero-image {
+		    width: 500px; /* Increase width for a bigger image */
+		    height: auto; /* Maintain aspect ratio */
+		    border-radius: 0; /* Remove circular effect */
+		    margin-top: 20px; /* Add spacing below the text */
+		    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Add subtle shadow for effect */
+		}
 
+		.hero-image:hover {
+		    transform: scale(1.1); /* Slight zoom on hover */
+		}
+
+	</style>
 
 </head>
 <body>
+	<form action="/index" method="post"></form>
 <!-- Navigation Bar -->
 <nav class="navbar navbar-expand-lg navbar-light">
     <div class="container">
@@ -273,11 +286,13 @@
 <div class="hero">
     <h1>Welcome to Smart Grocery</h1>
     <p>Your one-stop app for managing grocery lists and reducing waste!</p>
-    <a href="#grocery-section" class="btn btn-primary btn-lg">Get Started</a>
+    <img src="https://imgur.com/yfKcbx0.jpg" alt="Smart Grocery" class="hero-image"><br>
+    <br><a href="#grocery-section" class="btn btn-primary btn-lg">Get Started</a>
 </div>
 
+
 <!-- Grocery List Section -->
-	<div class="container-fluid d-flex flex-column" style="min-height: calc(100vh - 60px);">
+<div style="background: linear-gradient(to bottom right, #ffffff, #b2dfdb); padding: 20px; border-radius: 15px;">
     <div class="container grocery-list" id="grocery-section">
         <h2>Your Grocery List</h2>
         <div class="mb-3">
@@ -288,39 +303,43 @@
             <button class="btn btn-primary mt-2" onclick="addItem()">Add Item</button>
         </div>
     </div>
+</div>
+
 	<!-- Teasers Section -->
+	<div style="background: linear-gradient(to bottom right, #ff8a80, #f44336); padding: 20px; border-radius: 15px;">
+
 	    <div class="container my-5">
 	        <h2 class="text-center mb-4">Why Choose Smart Grocery?</h2>
 	        <div class="row">
 	            <div class="col-md-4 text-center">
-	                <img src="https://via.placeholder.com/150" alt="Save Money" class="img-fluid rounded-circle mb-3">
+	                <img src="https://images.pond5.com/4k-zoom-out-keep-calm-footage-227130994_iconl.jpeg" alt="Save Money" class="img-fluid rounded-circle mb-3">
 	                <h5>Save Money</h5>
 	                <p>Track your spending and optimize your grocery budget effortlessly.</p>
 	            </div>
 	            <div class="col-md-4 text-center">
-	                <img src="https://via.placeholder.com/150" alt="Avoid Waste" class="img-fluid rounded-circle mb-3">
+	                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIVOKGmPcJQbBc4zWV8aRYlnPAcu1isBcE6socPcQJyCKFlRk__2iwHqHwCKkSIzA8sS8&usqp=CAU" alt="Avoid Waste" class="img-fluid rounded-circle mb-3">
 	                <h5>Avoid Waste</h5>
 	                <p>Keep track of what you already have to reduce unnecessary purchases.</p>
 	            </div>
 	            <div class="col-md-4 text-center">
-	                <img src="https://via.placeholder.com/150" alt="Smart Reminders" class="img-fluid rounded-circle mb-3">
+	                <img src="https://www.shutterstock.com/image-photo/iot-smart-retail-futuristic-concept-260nw-1569044596.jpg" alt="Smart Reminders" class="img-fluid rounded-circle mb-3">
 	                <h5>Smart Reminders</h5>
 	                <p>Get timely alerts when it’s time to restock essential items.</p>
 	            </div>
 	        </div>
 	        <div class="row mt-4">
 	            <div class="col-md-4 text-center">
-	                <img src="https://via.placeholder.com/150" alt="Organized Lists" class="img-fluid rounded-circle mb-3">
+	                <img src="https://t4.ftcdn.net/jpg/01/79/61/81/360_F_179618150_HVmrPGisFyxD55cxWYp1G0SHZxHV0Re7.jpg" alt="Organized Lists" class="img-fluid rounded-circle mb-3">
 	                <h5>Organized Lists</h5>
 	                <p>Create categorized lists for efficient shopping experiences.</p>
 	            </div>
 	            <div class="col-md-4 text-center">
-	                <img src="https://via.placeholder.com/150" alt="Mobile Friendly" class="img-fluid rounded-circle mb-3">
+	                <img src="https://img.freepik.com/free-vector/online-grocery-store-app-template_23-2150208515.jpg" alt="Mobile Friendly" class="img-fluid rounded-circle mb-3">
 	                <h5>Mobile Friendly</h5>
 	                <p>Access your grocery list anytime, anywhere on your device.</p>
 	            </div>
 	            <div class="col-md-4 text-center">
-	                <img src="https://via.placeholder.com/150" alt="Analytics" class="img-fluid rounded-circle mb-3">
+	                <img src="https://t4.ftcdn.net/jpg/09/99/35/43/360_F_999354396_aHAs80ad6AATG0zXrdwSfXUfthUnbnfE.jpg" alt="Analytics" class="img-fluid rounded-circle mb-3">
 	                <h5>Spending Insights</h5>
 	                <p>Analyze your grocery trends and improve your shopping habits.</p>
 	            </div>
@@ -354,36 +373,48 @@
         }
     }
 
-	async function addItem() {
-	    const itemName = document.getElementById('itemName').value;
-	    const itemQuantity = document.getElementById('itemQuantity').value;
-	    const itemPrice = document.getElementById('itemPrice').value;
-	    const itemCategory = document.getElementById('itemCategory').value;
+    async function addItem() {
+        const itemName = document.getElementById('itemName').value;
+        const itemQuantity = document.getElementById('itemQuantity').value;
+        const itemPrice = document.getElementById('itemPrice').value;
+        const itemCategory = document.getElementById('itemCategory').value;
 
-	    if (itemName && itemQuantity && itemPrice && itemCategory) {
-	        try {
-	            await fetch('/api/grocery', {
-	                method: 'POST',
-	                headers: { 'Content-Type': 'application/json' },
-	                body: JSON.stringify({
-	                    name: itemName,
-	                    quantity: itemQuantity,
-	                    price: itemPrice,
-	                    category: itemCategory
-	                })
-	            });
-	            fetchItems();
-	            document.getElementById('itemName').value = '';
-	            document.getElementById('itemQuantity').value = '';
-	            document.getElementById('itemPrice').value = '';
-	            document.getElementById('itemCategory').value = '';
-	        } catch (error) {
-	            console.error("Error adding item:", error);
-	        }
-	    } else {
-	        alert("Please fill out all fields.");
-	    }
-	}
+        if (itemName && itemQuantity && itemPrice && itemCategory) {
+            try {
+                const payload = {
+                    name: itemName,
+                    quantity: itemQuantity,
+                    price: itemPrice,
+                    category: itemCategory
+                };
+                console.log("Adding item...", payload); // Debug logging
+
+                const response = await fetch('/api/grocery', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Failed to add item: ${response.statusText}`);
+                }
+
+                console.log("Item added successfully!");
+                fetchItems();
+
+                // Clear input fields
+                document.getElementById('itemName').value = '';
+                document.getElementById('itemQuantity').value = '';
+                document.getElementById('itemPrice').value = '';
+                document.getElementById('itemCategory').value = '';
+            } catch (error) {
+                console.error("Error adding item:", error);
+            }
+        } else {
+            alert("Please fill out all fields.");
+        }
+    }
+
     // Initialize the list
     fetchItems();
 </script>

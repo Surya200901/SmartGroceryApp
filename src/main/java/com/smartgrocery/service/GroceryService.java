@@ -1,13 +1,14 @@
 package com.smartgrocery.service;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.smartgrocery.dto.GroceryItemDTO;
 import com.smartgrocery.model.GroceryItem;
 import com.smartgrocery.repository.GroceryRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class GroceryService {
@@ -15,18 +16,29 @@ public class GroceryService {
     @Autowired
     private GroceryRepository groceryRepository;
 
+    // Save a grocery item to the database
+    @Transactional
     public GroceryItem addItem(GroceryItem item) {
-        return groceryRepository.save(item);
+        try {
+            System.out.println("Saving item: " + item);  // Debug log
+            return groceryRepository.save(item);
+        } catch (Exception e) {
+            System.out.println("Error while saving item: " + e.getMessage());
+            throw e;  // Propagate the error
+        }
     }
 
+    // Fetch all grocery items from the database
     public List<GroceryItem> getAllItems() {
         return groceryRepository.findAll();
     }
 
+    // Delete a grocery item by its ID
     public void deleteItem(Long id) {
         groceryRepository.deleteById(id);
     }
 
+    // Convert GroceryItem entity to DTO
     public GroceryItemDTO convertToDTO(GroceryItem groceryItem) {
         GroceryItemDTO dto = new GroceryItemDTO();
         dto.setName(groceryItem.getName());
@@ -36,6 +48,7 @@ public class GroceryService {
         return dto;
     }
 
+    // Convert GroceryItemDTO to entity
     public GroceryItem convertToEntity(GroceryItemDTO groceryItemDTO) {
         GroceryItem groceryItem = new GroceryItem();
         groceryItem.setName(groceryItemDTO.getName());
@@ -44,13 +57,5 @@ public class GroceryService {
         groceryItem.setQuantity(groceryItemDTO.getQuantity());
         groceryItem.setInStock(true); // Default value
         return groceryItem;
-    }
-
-    // Method to get all grocery items as DTOs
-    public List<GroceryItemDTO> getAllItemsAsDTO() {
-        List<GroceryItem> items = groceryRepository.findAll();
-        return items.stream()
-                    .map(this::convertToDTO)  // Convert each GroceryItem to GroceryItemDTO
-                    .collect(Collectors.toList());
     }
 }

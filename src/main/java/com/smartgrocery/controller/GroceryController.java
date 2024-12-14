@@ -1,9 +1,11 @@
 package com.smartgrocery.controller;
 
-import com.smartgrocery.model.GroceryItem;
 import com.smartgrocery.dto.GroceryItemDTO;
-import com.smartgrocery.service.GroceryService;  // Make sure you have this service
+import com.smartgrocery.model.GroceryItem;
+import com.smartgrocery.service.GroceryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,32 +18,31 @@ public class GroceryController {
     @Autowired
     private GroceryService groceryService;
 
-    @Autowired
-    private GroceryService groceryItemService;  // Service to convert between entity and DTO
-
     // Get all grocery items and convert them to DTOs
     @GetMapping
     public List<GroceryItemDTO> getItems() {
         List<GroceryItem> items = groceryService.getAllItems();
-        // Convert each item to DTO
         return items.stream()
-                .map(groceryItemService::convertToDTO)
+                .map(groceryService::convertToDTO)
                 .collect(Collectors.toList());
     }
 
-    // Add a new grocery item
+    // Add a new grocery item using DTO
     @PostMapping
-    public GroceryItemDTO addItem(@RequestBody GroceryItemDTO itemDTO) {
-        // Convert DTO to entity
-        GroceryItem item = groceryItemService.convertToEntity(itemDTO);
-        GroceryItem savedItem = groceryService.addItem(item);
-        // Return saved item as DTO
-        return groceryItemService.convertToDTO(savedItem);
+    public ResponseEntity<GroceryItemDTO> addItem(@RequestBody GroceryItemDTO groceryItemDTO) {
+        System.out.println("Received request to add item: " + groceryItemDTO);  // Log the request body
+        GroceryItem groceryItem = groceryService.convertToEntity(groceryItemDTO);
+        GroceryItem savedItem = groceryService.addItem(groceryItem);
+
+        // Convert saved entity to DTO and return as response
+        GroceryItemDTO savedItemDTO = groceryService.convertToDTO(savedItem);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedItemDTO);
     }
 
     // Delete a grocery item by ID
     @DeleteMapping("/{id}")
-    public void deleteItem(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteItem(@PathVariable Long id) {
         groceryService.deleteItem(id);
+        return ResponseEntity.noContent().build();
     }
 }
